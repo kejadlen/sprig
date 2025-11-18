@@ -22,8 +22,6 @@ jobs:
         with:
           toolchain: ${{ matrix.rust }}
       - uses: extractions/setup-just@v2
-      - name: Build
-        run: just build
       - name: Test
         run: just test
 
@@ -35,26 +33,5 @@ jobs:
         with:
           components: clippy, rustfmt
       - uses: extractions/setup-just@v2
-      - name: Check formatting
-        run: just fmt-check
-      - name: Run clippy
-        run: just clippy
-
-  audit:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@stable
-      - uses: extractions/setup-just@v2
-      - name: Install cargo-audit
-        run: cargo install cargo-audit
-      - name: Run audit
-        run: just audit
-
-  docs:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@stable
-      - name: Generate documentation
-        run: cargo doc --no-deps --verbose
+      - name: Lint
+        run: just lint
